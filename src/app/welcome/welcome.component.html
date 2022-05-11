@@ -1,0 +1,21 @@
+<div class="container bg-light py-5">
+    <h1 class="display-5 fw-bold">Welcome to the Quiz App</h1>
+    <hr>
+    <p class="col-md-8 fs-4">This quiz will contain total 9 questions.</p>
+    <h4>Rules</h4>
+    <ol>
+        <li>Each Correct question gives you +10 points</li>
+        <li>Each InCorrect question gives you -5 points</li>
+        <li>For Each not answered question -5 points</li>
+        <li>You will 60sec to answer each question</li>
+        <li>Refreshing the page will reset your Quiz</li>
+    </ol>
+    <h2 style="font-family:cursive; text-align:center">All The Best</h2>
+    <hr>
+    <div class="name col-md-4 my-3">
+        <label for="">Enter Your Name</label>
+        <input #name type="text" class="form-control">
+    </div>
+    <button class="btn btn-primary btn-lg" (click)="startQuiz()" routerLink="/question">Start Quiz</button>
+    
+</div>
