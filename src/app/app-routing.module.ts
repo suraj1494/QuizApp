@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ErrorComponent } from './error/error.component';
 import { QuestionComponent } from './question/question.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 
 const routes: Routes = [
   {path:"" ,redirectTo:'welcome',pathMatch:"full"},
   {path:"welcome",component:WelcomeComponent},
-  {path:"question",component:QuestionComponent }
+  {path:"question",component:QuestionComponent },
+  {path:"**",component:ErrorComponent}
 ];
 
 @NgModule({

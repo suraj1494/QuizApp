@@ -8,6 +8,7 @@ import { QuestionComponent } from './question/question.component';
 import { HeaderComponent } from './header/header.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ChangeBgDirective } from './change-bg.directive';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ChangeBgDirective } from './change-bg.directive';
     WelcomeComponent,
     QuestionComponent,
     HeaderComponent,
-    ChangeBgDirective
+    ChangeBgDirective,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
