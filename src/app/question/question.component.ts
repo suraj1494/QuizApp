@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../service/question.service';
 import { interval } from 'rxjs';
+import { WelcomeComponent } from '../welcome/welcome.component';
+
 
 @Component({
   selector: 'app-question',
@@ -17,6 +19,8 @@ export class QuestionComponent implements OnInit {
   wrongAnswer:number=0;
   interval$:any;
   progress:string='0'
+  isQuizCompleted:boolean=false;
+  welcomeText:string="Welcome";
   constructor(private questionService:QuestionService) { }
 
   ngOnInit(): void {
@@ -28,7 +32,7 @@ export class QuestionComponent implements OnInit {
 
   getAllQuestions(){
     this.questionService.getQuestionJson().subscribe(res=>{
-      // console.log(res.questions)
+      console.log(res.questions)
       this.questionList=res.questions
     })
   }
@@ -42,17 +46,32 @@ export class QuestionComponent implements OnInit {
   }
 
   answer(currentQuestion:number,option:any){
+    // console.log("hey")
+    // console.log(this.questionList.length)
+    // console.log(this.currentQuestion)
+    if(currentQuestion===this.questionList.length){
+      this.isQuizCompleted=true;
+      this.welcomeText="Thank You";
+      this.stopCounter()
+    }
     if(option.correct){
       this.points+=10;
       this.correctAnswer++;
-      this.currentQuestion++;
-      this.resetCounter();
-      this.getProgressPercent();
+      setTimeout(() => {
+        this.currentQuestion++;
+        this.resetCounter();
+        this.getProgressPercent();  
+      }, 500);
+      
     }else{
-      this.currentQuestion++;
-      this.wrongAnswer++;
-      this.resetCounter();      
-      this.getProgressPercent;
+      setTimeout(() => {
+        this.currentQuestion++;
+        this.wrongAnswer++;
+        this.resetCounter();      
+        this.getProgressPercent;
+      }, 500);
+
+      
       this.points-=5;
     }
 
@@ -90,6 +109,7 @@ export class QuestionComponent implements OnInit {
     this.points=0;
     this.counter=60;
     this.currentQuestion=0;
+    this.progress="0";
   }
 
   getProgressPercent(){

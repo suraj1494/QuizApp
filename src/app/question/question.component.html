@@ -1,3 +1,4 @@
+<app-header></app-header>
 <div class="container mt-5">
     <div class="card ">
         <div class="d-flex justify-content-between p-3">
@@ -6,43 +7,60 @@
             </div>
             <div class="quiz-header">
                 <h4 style="font-family:cursive;">Angular Quiz</h4>
-                <span style="font-style:italic;">Welcome {{name}}</span>
+                <span style="font-style:italic;">{{welcomeText}}  {{name}}</span>
             </div>
         </div>
-        <div class="d-flex justify-content-around py-3">
-            <div class="score">
-                <h4>{{points}} Points</h4>
+        <ng-container *ngIf="!isQuizCompleted">
+            <div class="d-flex justify-content-around py-3">
+                <div class="score">
+                    <h4>{{points}} Points</h4>
+                </div>
+                <div class="question-remain">
+                    <span style="font-style: italic;">Question {{currentQuestion + 1}} of {{questionList.length}}</span>
+                </div>
+                <div class="timer">
+                    <h5>{{counter}} sec &#9202;</h5>
+                </div>
             </div>
-            <div class="question-remain">
-                <span style="font-style: italic;">Question {{currentQuestion + 1}} of {{questionList.length}}</span>
+            <div class="progress mb-3">
+                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [ngStyle]="{'width':progress+'%'}" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-            <div class="timer">
-                <h5>{{counter}} sec &#9202;</h5>
+            <div class="question">
+                <div class="card">
+                    
+                    <h3>{{questionList[currentQuestion]?.questionText}}</h3>
+                </div>
             </div>
-        </div>
-        <div class="progress mb-3">
-            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [ngStyle]="{'width':progress+'%'}" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
-        <div class="question">
-            <div class="card">
-                <h3>{{questionList[currentQuestion].questionText}}</h3>
+            <div class="options">
+                <ol *ngFor="let option of questionList[currentQuestion]?.options">
+                    <li (click)="answer(currentQuestion+1,option)">
+                        <div appChangeBg [isCorrect]="option.correct" class="card">
+                            {{option.text}}
+                        </div>
+                    </li>
+                </ol>
             </div>
-        </div>
-        <div class="options">
-            <ol *ngFor="let option of questionList[currentQuestion]?.options">
-                <li (click)="answer(currentQuestion+1,option)">
-                    <div class="card">
-                        {{option.text}}
-                    </div>
-                </li>
-            </ol>
-        </div>
-        <div class="d-flex justify-content-between">
-            <button [disabled]="currentQuestion==0" class="btn" (click)="prevQuestion()"><i class="fa text-primary fa-chevron-left fa-3x" aria-hidden="true"></i></button>
-            <button class="btn" (click)="resetQuiz()"><i class="fa text-primary fa-refresh fa-3x" aria-hidden="true"></i></button>
-            <button class="btn" (click)="nextQuestion()"><i class="fa text-primary fa-chevron-right fa-3x" aria-hidden="true"></i></button>            
-        </div>
+            <div class="d-flex justify-content-between">
+                <button [disabled]="currentQuestion==0" class="btn" (click)="prevQuestion()"><i class="fa text-primary fa-chevron-left fa-3x" aria-hidden="true"></i></button>
+                <button class="btn" (click)="resetQuiz()"><i class="fa text-primary fa-refresh fa-3x" aria-hidden="true"></i></button>
+                <button class="btn" (click)="nextQuestion()"><i class="fa text-primary fa-chevron-right fa-3x" aria-hidden="true"></i></button>            
+            </div>
+        </ng-container>
+        <ng-container *ngIf="isQuizCompleted">
+            <div class="row d-flex justify-content-between">
+                <img style="width: 50%;" class="img-fluid col-sm-12 mx-auto" src="https://media.istockphoto.com/vectors/party-popper-with-confetti-vector-id1125716911?k=20&m=1125716911&s=612x612&w=0&h=1jfthodW7JsOR8vz3A_e2HJbrAAjPJhogviXeOwaz5c=" alt="Congratulations Trophy Image">
+                <div class="result text-center col-md-6 col-sm-12">
+                    <br>
+                    <h3>Congratulation!!<br>
+                    You Have Completed Quiz!<br>
+                    Below is your score</h3>
+                    <p>Total Question Attempted : {{questionList.length}}</p>
+                    <p>Total correct questions  : {{correctAnswer}}</p>
+                    <p>Total wrong questions : {{wrongAnswer}}</p>
+                    <p>Your score : {{points}}</p>
+                    <button type="button" routerLink="/welcome" class="btn btn-primary">EXIT</button>
+                </div>
+            </div>
+        </ng-container>
     </div>
 </div>
-
-
